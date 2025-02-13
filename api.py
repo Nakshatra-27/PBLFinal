@@ -1,38 +1,3 @@
-"""
-import sys
-sys.stdout.reconfigure(encoding='utf-8')  # Fix UnicodeEncodeError
-
-from flask import Flask, request, jsonify
-import mysql.connector
-
-app = Flask(__name__)
-
-# Attempt to connect to MySQL
-try:
-    db = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="root1234",  # Replace with your MySQL password
-        database="HealthAssistant"
-    )
-    cursor = db.cursor(dictionary=True)
-    print("✅Database connection successful!")
-except mysql.connector.Error as err:
-    print(f"Error connecting to database: {err}")
-
-# API to check database connection
-@app.route('/check-db', methods=['GET'])
-def check_db():
-    try:
-        cursor.execute("SELECT DATABASE()")  # Run a simple query
-        result = cursor.fetchone()
-        return jsonify({"message": "Database connected!", "database": result}), 200
-    except mysql.connector.Error as err:
-        return jsonify({"error": f"Database connection failed: {err}"}), 500
-
-if __name__ == '__main__':
-    app.run(debug=True)
-"""
 from flask import Flask, request, jsonify 
 import mysql.connector
 
